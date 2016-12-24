@@ -1,0 +1,27 @@
+{
+  "name": "webdev-rice",
+  "version": "1.0.0",
+  "description": "Class server for Rice WebDev",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app/getgit.js",
+    "bundle": "cd .. && rm -rf webdev-cli.zip && zip -r webdev-cli.zip webdev-cli/bin webdev-cli/app webdev-cli/package.json webdev-cli/README.md"
+  },
+  "author": "Scott Pollack",
+  "license": "MIT",
+  "engines": {
+    "node": "6.1.0"
+  },
+  "bin": {
+    "getgit": "app/getgit.js"
+  },
+  "dependencies": {
+    "fs-promise": "^0.5.0",
+    "moment": "^2.13.0",
+    "mongoose": "^4.1.10",
+    "node-fetch": "^1.6.3",
+    "node-fs": "^0.1.7",
+    "yargs": "^5.0.0"
+  },
+  "devDependencies": {}
+}

@@ -1,0 +1,55 @@
+{
+    "class": {
+        "term": "Fall",
+        "year": "2016",
+        "firstDay": "2016-08-23"
+    },
+	"assignments": [
+	{ "name": "Simple Page", "due": 3, "id": "simple" },
+	{ "name": "Dynamic Page", "due": 6, "id": "dynamic" },
+	{ "name": "Draft Front-End", "due": 9, "id":"draftfront" },
+	{ "name": "JavaScript Game", "due": 14, "id": "jsgame" },
+	{ "name": "Front-End App", "due": 18, "id": "frontend"},
+	{ "name": "Draft Back-End", "due": 22, "id": "draftback"},
+	{ "name": "Integrated Web App", "due": 26, "id": "integrated"},
+	{ "name": "Final Full Web App", "due": 29, "id": "final" },
+	{ "name": "COMP531 Draft Review", "due": 11, "id": "draftreview"},
+	{ "name": "COMP531 Front-End Review", "due": 24, "id": "frontreview"},
+	{ "name": "COMP531 Paper and Presentation", "due": 27, "id":"paper"},
+	{ "name": "COMP531 Paper and Presentation", "due": 27, "id":"presentation"}
+	],
+
+	"sessions": [
+	{ "day": 1, "topic": "HTML", "exercise": "hello world page"},
+	{ "day": 2, "topic": "HTTP and Forms", "exercise": "pizza order form"},
+	{ "day": 3, "topic": "JavaScript", "exercise": "hello JavaScript"},
+	{ "day": 4, "topic": "Scope", "exercise": "dynamic style"},
+	{ "day": 5, "topic": "Events and DHTML", "exercise": "avoid the mouse game"},
+	{ "day": 6, "topic": "Storage and Canvas", "exercise": "canvas game"},
+	{ "day": 7, "topic": "jQuery", "exercise": "promise to fetch"},
+	{ "day": 8, "topic": "Modern JavaScript", "exercise": "unit testing"},
+	{ "day": 9, "topic": "MVC", "exercise": "VDOM"},
+	{ "day": 10, "topic": "ReactJS", "exercise": "hello React"},
+	{ "day": 11, "topic": "Redux", "exercise": "hello Redux"},
+	{ "day": 12, "topic": "Front End Unit Testing", "exercise": "Karma"},
+	{ "day": 13, "topic": "Mocking", "exercise": "mocking"},
+	{ "day": 14, "topic": "End-to-End Testing", "exercise": "Selenium"},
+	{ "day": null, "topic": "RECESS", "exercise": "<no class>", "offset": 15 },
+	{ "day": 15, "topic": "Web Servers", "exercise": "node server", "offset": 1 },
+	{ "day": 16, "topic": "Back End", "exercise": "endpoints", "offset": 1 },
+	{ "day": 17, "topic": "Architecture and REST", "exercise": "stubbing", "offset": 1 },
+	{ "day": 18, "topic": "Back-End Unit Testing", "exercise": "Backend Unit Tests", "offset": 1 },
+	{ "day": 19, "topic": "Web hosting", "exercise": "Heroku", "offset": 1 },
+	{ "day": 20, "topic": "Databases", "exercise": "MongoDB", "offset": 1 },
+	{ "day": 21, "topic": "Salted Authorization", "exercise": "login", "offset": 1 },
+	{ "day": 22, "topic": "security: SQL, XSS, CSRF, XSSI, HTTPS", "exercise": "CORS", "offset": 1 },
+	{ "day": 23, "topic": "Third Party Authorization", "exercise": "OAuth", "offset": 1 },
+	{ "day": 24, "topic": "scalability caching", "exercise": "redis", "offset": 1 },
+	{ "day": 25, "topic": "service APIs", "exercise": "cloudinary", "offset": 1 },
+	{ "day": 26, "topic": "integrating", "exercise": "reflections", "offset": 1 },
+	{ "day": null, "topic": "THANKSGIVING", "exercise": "<no class>", "offset": 28},
+	{ "day": 27, "topic": "presentations", "exercise": "critique", "offset": 2 },
+	{ "day": 28, "topic": "presentations", "exercise": "critique", "offset": 2 },
+	{ "day": 29, "topic": "<no class> final project due", "exercise": "<no class>", "offset": 4 }
+	]
+}

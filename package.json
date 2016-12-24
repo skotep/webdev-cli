@@ -22,6 +22,7 @@
     "mongoose": "^4.1.10",
     "node-fetch": "^1.6.3",
     "node-fs": "^0.1.7",
+    "nodegit": "^0.14.1",
     "yargs": "^5.0.0"
   },
   "devDependencies": {}

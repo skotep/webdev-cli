@@ -202,7 +202,8 @@ function main(assignments, {list, directory, assignment,
     if (duetimeOverride) console.log('Using duetime of', duetimeObj.format())
     const duetime = duetimeObj.valueOf()
 
-    const query = { assignmentId: assignment }
+    const term = getTerm()
+    const query = { assignmentId: assignment, term }
     if (netid) query.netid = netid
     if (sha) { query.sha = sha; force = true }
 
@@ -253,6 +254,8 @@ function main(assignments, {list, directory, assignment,
                     return promiseExec(`rm -rf ${local}`)
                         .then(() => Git.Clone(s.repo, local))
                         .then(repo => promiseExec(`cd ${local} && git checkout ${s.sha}`))
+                        .then(_ => promiseExec(`cd ${local} && ls package.json | wc -l`)
+                                  .then(wc => { if (wc == 1) keep = true }))
                         .then(_ => keep ? null : promiseExec(`cd ${local} && ls | grep -v ${assignment} | xargs rm -rf && rm -rf .git*`))
                         .then(_ => ({ netid: s.repo, error: false }))
                         .catch((err) => {

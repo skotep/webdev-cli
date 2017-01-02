@@ -16,10 +16,11 @@ function loadAssignments() {
             ).map((e, i) => {
                 const ii = e.id === 'paper' ? `-${e.id}` : i+1
                 const type = e.id === 'paper' ? 'inclass' : 'hw'
+                const extra = e.id === 'inclass' ? 0 : 1
                 const key = e.full ? `hw${ii}-frontend` : `hw${ii}`
                 return { key, day: e.due, 
-                     dueTime: getDueTime(e.due, e.offset), 
-                     dueDate: getDueDate(e.due, e.offset), 
+                     dueTime: getDueTime(e.due, e.offset, extra), 
+                     dueDate: getDueDate(e.due, e.offset, extra), 
                      name: e.name, type: type }
             })
         ]
@@ -28,6 +29,8 @@ function loadAssignments() {
                             { key: e.key.replace('-frontend', '-backend') }))
             .forEach(e => assignments.push(e))
         assignments.sort((a, b) => {
+            if (a.dueTime < b.dueTime) return -1
+            if (a.dueTime > b.dueTime) return 1
             if (a.day < b.day) return -1
             if (a.day > b.day) return +1
             if (a.type === 'inclass') return -1
@@ -51,16 +54,16 @@ function loadAssignments() {
     )
 }
 
-function getDueDate(sessionDay, offset = 0) {
-   return getDueTime(sessionDay, offset)
+function getDueDate(sessionDay, offset = 0, extra = 0) {
+   return getDueTime(sessionDay, offset, extra)
         .format("ddd MM/DD")
 }
 
-function getDueTime(sessionDay, offset = 0) {
+function getDueTime(sessionDay, offset = 0, extra = 0) {
     var week = Math.floor((sessionDay + offset - 1) / 2);
     var dow = (sessionDay + offset - 1) - 2 * week;
     return moment(planning.class.firstDay)
-        .add(week, 'weeks').add(dow * 2, 'days')
+        .add(week, 'weeks').add(dow * 2 + extra, 'days')
 }
 
 exports.loadAssignments = loadAssignments

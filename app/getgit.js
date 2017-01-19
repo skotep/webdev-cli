@@ -170,12 +170,12 @@ function listAssignments(assignments) {
                 raw.map(e => map[e._id])
                     .sort((a, b) => a.day - b.day)
                     .forEach(a =>
-                        console.log(`${a.key},${a.dueDate},${a.name},${a.dueTime}`))
+                        console.log(`${a.key},${a.dueDate},${a.name},${getDueTime(a.dueTime)}`))
                 const ids = raw.map(e => e._id)
                 console.log('\nNo submissions:')
                 Object.keys(map).filter(key => ids.indexOf(key) < 0).forEach(key => {
                     const a = map[key];
-                    console.log(`${a.key},${a.dueDate},${a.name},${a.dueTime}`)
+                    console.log(`${a.key},${a.dueDate},${a.name},${getDueTime(a.dueTime)}`)
                 })
                 res()
             } catch (e) {
@@ -183,6 +183,19 @@ function listAssignments(assignments) {
             }
         })
     })
+}
+
+function getDueTime(dueTime, duetimeOverride) {
+    if (duetimeOverride) {
+        const dueHours = duetimeOverride / 100
+        const dueMinutes = duetimeOverride - 100*parseInt(dueHours)
+        const duetimeObj = dueTime.add(dueHours, 'hours').minute(dueMinutes)
+        console.log('Using duetime of', duetimeObj.format())
+        return duetimeObj
+    } else {
+        return dueTime.add(26, 'hours').minute(5)
+    }
+
 }
 
 function main(assignments, {list, directory, assignment, 
@@ -196,12 +209,8 @@ function main(assignments, {list, directory, assignment,
         throw Error(`No assignment information for ${assignment}`)
     }
 
-    const dueHours = (duetimeOverride && duetimeOverride / 100) || 26
-    const dueMinutes = (duetimeOverride && duetimeOverride - 100*parseInt(duetimeOverride/100)) || 5
-    const duetimeObj = assignments.filter(a => a.key === assignment)[0].dueTime.add(dueHours, 'hours').minute(dueMinutes)
-    if (duetimeOverride) console.log('Using duetime of', duetimeObj.format())
-    const duetime = duetimeObj.valueOf()
-
+    const duetime = getDueTime(assignments.filter(a => a.key === assignment)[0].dueTime, 
+                               duetimeOverride).valueOf()
     const term = getTerm()
     const query = { assignmentId: assignment, term }
     if (netid) query.netid = netid

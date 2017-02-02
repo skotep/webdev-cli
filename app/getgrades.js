@@ -108,7 +108,7 @@ const displayGrades = (ug, netid, grades) => {
 }
 
 const main = args => new Promise((resolve, reject) => {
-    const term = getTerm()
+    const term = args.term || getTerm()
     if (args.check) {
         return checkWeights(term).then(resolve).catch(reject)
     }
@@ -162,6 +162,7 @@ const args = require('yargs')
     .alias('r', 'roster').nargs('r', 1).describe('r', 'student roster')
     .alias('n', 'netid').nargs('n', 1).describe('n', 'netId [optional]')
     .alias('c', 'check').describe('c', 'check grade weights')
+    .alias('T', 'term').describe('T', 'override term, e.g., 2016Fall')
     .demand(['r'])
     .argv
 

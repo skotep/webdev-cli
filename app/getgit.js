@@ -125,12 +125,11 @@ function uploadGrades(assignment, directory) {
     )
 }
 
-function listGrades(assignment, netid) {
-    const term = getTerm()
+function listGrades(assignment, netid, term) {
     return new Promise((res, rej) => {
-        AssignmentGrades.find({term, assignment}).exec((err, raw) => {
+        AssignmentGrades.find({term: term || getTerm(), assignment}).exec((err, raw) => {
             if (err) rej(err)
-            if (raw.length != 1) rej(`No records found for ${term} ${assignment}`)
+            if (raw.length != 1) rej(`No records found for ${term || getTerm()} ${assignment}`)
             if (netid) {
                 const grades = raw[0].grades.filter(r => r.netid === netid);
                 const g = grades.length > 0 ? grades[0] : { bytestream: 'no details' }
@@ -159,11 +158,10 @@ function listAssignmentsNew() {
     })
 }
 
-function listAssignments(assignments) {
+function listAssignments(assignments, term) {
     const map = assignments.reduce((o, a) => { o[a.key] = a; return o }, {})
-    const term = getTerm()
     return new Promise((res, rej) => {
-        Assignment.aggregate([ { $match: { term }}, 
+        Assignment.aggregate([ { $match: { term: term || getTerm() }}, 
                 { $group: { _id: "$assignmentId" }} ], (err, raw) => {
             if (err) rej(err)
             try {
@@ -198,26 +196,25 @@ function getDueTime(dueTime, duetimeOverride) {
 
 }
 
-function main(assignments, {list, directory, assignment, 
+function main(assignments, {list, directory, assignment, term,
         netid, force, exclude, keep, grade, duetimeOverride, sha}) {
     if (assignment === '?') {
-        return listAssignments(assignments)
+        return listAssignments(assignments, term)
     }
     const infos = assignments.filter(a => a.key === assignment)
     if (!infos || !infos[0]) {
         console.log(assignments.map(a => a.key))
-        throw Error(`No assignment information for ${assignment}`)
+        throw Error(`No assignment information for ${assignment} in ${term}`)
     }
 
     const duetime = getDueTime(assignments.filter(a => a.key === assignment)[0].dueTime, 
                                duetimeOverride).valueOf()
-    const term = getTerm()
-    const query = { assignmentId: assignment, term }
+    const query = { assignmentId: assignment, term: term || getTerm() }
     if (netid) query.netid = netid
     if (sha) { query.sha = sha; force = true }
 
     if (grade) {
-        return list ? listGrades(assignment, netid) : checkThenUpload(assignment, directory)
+        return list ? listGrades(assignment, netid, term) : checkThenUpload(assignment, directory)
     }
 
     return new Promise((res, rej) => {
@@ -304,6 +301,7 @@ const args = require('yargs')
 .alias('s', 'sha').nargs('s', 1).describe('s', 'sha to checkout')
 .alias('g', 'grade').describe('g', `list or upload directory of grade files, one file per student by netid, including a file ${gradeFile}`)
 .alias('t', 'duetimeOverride').describe('t', 'four digit override of the due time [default is 2605 = 2AM]')
+.alias('T', 'term').describe('T', 'override term, e.g., 2016Fall')
 .alias('h', 'help')
 .help('h')
 .demand(['a'])

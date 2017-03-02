@@ -18,9 +18,10 @@ function loadAssignments() {
                 const type = e.id === 'paper' ? 'inclass' : 'hw'
                 const extra = e.id === 'inclass' ? 0 : 1
                 const key = e.full ? `hw${ii}-frontend` : `hw${ii}`
+                const offset = planning.sessions.find(d => d.day === e.due).offset
                 return { key, day: e.due, 
-                     dueTime: getDueTime(e.due, e.offset, extra), 
-                     dueDate: getDueDate(e.due, e.offset, extra), 
+                     dueTime: getDueTime(e.due, offset, extra), 
+                     dueDate: getDueDate(e.due, offset, extra), 
                      name: e.name, type: type }
             })
         ]

@@ -173,7 +173,7 @@ function listAssignments(assignments, term) {
                 console.log('\nNo submissions:')
                 Object.keys(map).filter(key => ids.indexOf(key) < 0).forEach(key => {
                     const a = map[key];
-                    console.log(`${a.key},${a.dueDate},${a.name},${getDueTime(a.dueTime)}`)
+                    console.log(`${a.key},${a.dueDate},${a.name},${getDueTime(a.dueTime)},no_submissions`)
                 })
                 res()
             } catch (e) {

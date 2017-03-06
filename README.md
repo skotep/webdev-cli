@@ -9,6 +9,11 @@ and pushing grades.
 npm install
 ```
 
+Note that if installation fails at the preinstall stage of `nodegit`
+the problem is most likely missing SSL headers.
+On Ubuntu, do `apt install libssl-dev` to install these headers.
+(See: https://github.com/nodegit/nodegit/issues/1037)
+
 # Usage
 
 Familiarize yourself with the command line flags
